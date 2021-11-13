@@ -17,13 +17,13 @@ jobs:
           name: Run tests
           command: npm run test
       - run:
-          name: Install heroku
-          command: heroku git:remote -a applicationiim
-      - run:
           name: Deploy Master to heroku
-          command: - git add .
-          - git commit -m "make it better"
-          - git push heroku master
+          command: $ git add .
+          git commit -am "make it better"
+          git push heroku master
+      - run:
+          name: Install heroku
+          command: npm install --save-dev heroku-tools
 
 workflows:
   heroku_deploy:
