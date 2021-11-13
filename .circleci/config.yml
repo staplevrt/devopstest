@@ -16,6 +16,12 @@ jobs:
       - run:
           name: Run tests
           command: npm run test
+      - run:
+          name: Deploy Master to heroku
+          command: npm run heroku-deploy -- --token=$HEROKU_DEPLOY_TOKEN
+      - run:
+          name: Install heroku
+          command: npm install --save-dev heroku-tools
 
 workflows:
   heroku_deploy:
