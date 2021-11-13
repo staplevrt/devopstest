@@ -22,7 +22,7 @@ jobs:
       - run:
           name: Deploy Master to heroku
           command: - git add .
-          - git commit -am "make it better"
+          - git commit -m "make it better"
           - git push heroku master
 
 workflows:
