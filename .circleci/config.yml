@@ -17,6 +17,26 @@ jobs:
           name: Run tests
           command: npm run test
 
+description: 
+  Verifies the Heroku API key has been added so we can authenticate.
+parameters:
+  print-whoami:
+    default: false
+    description: 'Print the result of heroku auth:whoami.'
+    type: boolean
+steps:
+  - run:
+      command: 
+        if [[ $HEROKU_API_KEY == "" ]]; then
+          echo "No Heroku API key set, please set the HEROKU_API_KEY environment variable."
+          echo "This can be found by running the `heroku auth:token` command locally."
+          exit 1
+        else
+          echo "Heroku API key found."
+        fi
+      name: Verify HEROKU_API_KEY is set
+
+
 workflows:
   heroku_deploy:
     environment:
@@ -25,12 +45,29 @@ workflows:
       - checkout
       - run:
           name: Setup Heroku
-          command: bash .circleci/setup-heroku.sh
+          command: npm install
     jobs:
       - build
       - heroku/deploy-via-git:
-          requires:
+        requires:
             - build
           filters:
             branches:
               only: main
+        parameters:
+            api-key:
+                default: HEROKU_API_KEY
+                type: env_var_name
+            app-name:
+                default: $HEROKU_APP_NAME
+                type: string
+            branch:
+                default: main
+                type: string
+            force:
+                default: false
+                type: boolean
+            maintenance-mode:
+                default: false
+                type: boolean
+          
