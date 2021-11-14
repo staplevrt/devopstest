@@ -4,10 +4,6 @@ orbs:
   heroku: circleci/heroku@0.0.10
 
 jobs:
-  lint:
-    run:
-      - name: Run lint
-        command: npm install -g lint
   build:
     docker:
       - image: circleci/node:10.16.3
@@ -24,7 +20,7 @@ jobs:
           name: Setup Heroku
           command: bash .circleci/setup-heroku.sh # run a script to set up Heroku
       - run:
-          command: |
+          command:
             git push heroku sequential-branch-filter:main
             heroku run rake db:migrate
             sleep 5 # sleep for 5 seconds to wait for dynos
