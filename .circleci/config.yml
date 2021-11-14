@@ -5,9 +5,9 @@ orbs:
 
 jobs:
   lint:
-    steps:
+    run:
       - name: Run lint
-        run: npm run lint
+        command: npm install -g lint
   build:
     docker:
       - image: circleci/node:10.16.3
