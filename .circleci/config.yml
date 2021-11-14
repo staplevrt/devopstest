@@ -4,6 +4,10 @@ orbs:
   heroku: circleci/heroku@0.0.10
 
 jobs:
+  lint:
+    steps:
+      - name: Run lint
+        run: npm run lint
   build:
     docker:
       - image: circleci/node:10.16.3
