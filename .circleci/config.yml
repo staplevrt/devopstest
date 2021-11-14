@@ -16,9 +16,19 @@ jobs:
       - run:
           name: Run tests
           command: npm run test
+      - run:
+          name: Run lint
+          command: npm install lint
 
 workflows:
   heroku_deploy:
+    environment:
+      HEROKU_APP: "applicationiim"
+    steps:
+      - checkout
+      - run:
+          name: Setup Heroku
+          command: bash .circleci/setup-heroku.sh
     jobs:
       - build
       - heroku/deploy-via-git: # Use the pre-configured job, deploy-via-git
